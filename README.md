@@ -10,15 +10,16 @@ Para activar `mysql`
 ```bash
   mvn spring-boot:run -Dspring-boot.run.profiles=mysql
 ```
-![img.png](images/h2-console.png)
-
 Para activar `h2`
 ```bash
   mvn spring-boot:run -Dspring-boot.run.profiles=h2
 ```
 La variable de entorno `ENV_PORT` ha sido configurada para arrancar por el `8081`
 
-Use esa ENV para acceder a la consola h2, disponible en: http://localhost:8081/h2-console
+Use esta ENV para acceder a la consola h2, disponible en: http://localhost:8081/h2-console
+
+![img.png](images/h2-console.png)
+
 
 ### Documentación del servicio expuesto
 Endpoints que expone SpringDoc
