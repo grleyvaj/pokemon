@@ -28,8 +28,10 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
-		<spring-doc.version>2.7.0</spring-doc.version>
+		<spring-doc.version>2.8.13</spring-doc.version>
 		<ulid.version>5.2.3</ulid.version>
+		<retrofit.version>3.0.0</retrofit.version>
+		<retry.version>2.0.12</retry.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -83,6 +85,12 @@
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>${spring-doc.version}</version>
 		</dependency>
+		<!--	Eliminate security issues with openapi version	-->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.18.0</version> <!-- secure version -->
+		</dependency>
 
 		<!--	ID Generator as ULID	-->
 		<dependency>
@@ -90,6 +98,26 @@
 			<artifactId>ulid-creator</artifactId>
 			<version>${ulid.version}</version>
 		</dependency>
+
+		<!--	Consume POKEMON API	-->
+		<dependency>
+			<groupId>com.squareup.retrofit2</groupId>
+			<artifactId>retrofit</artifactId>
+			<version>${retrofit.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup.retrofit2</groupId>
+			<artifactId>converter-jackson</artifactId>
+			<version>${retrofit.version}</version>
+		</dependency>
+
+		<!-- Retry consuming POKEMON API -->
+		<dependency>
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
+			<version>${retry.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

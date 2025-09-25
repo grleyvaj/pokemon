@@ -44,3 +44,12 @@ spring-doc:
 logging:
   level:
     web: ${DB_PROD_HOST:DEBUG}
+
+apis:
+  pokemon:
+    base-url: https://pokeapi.co/api/v2/pokemon/
+    connect-timeout-ms: 5000
+    read-timeout-ms: 5000
+    write-timeout-ms: 5000
+    maxRetries: 3
+    delayMs: 500
