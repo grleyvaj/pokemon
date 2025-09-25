@@ -1,0 +1,55 @@
+server:
+  port: ${ENV_PORT:8081}
+
+spring:
+  flyway:
+    enabled: true
+    table: migrations
+    locations: classpath:db/migration
+  jackson:
+    default-property-inclusion: non_null
+    mapper:
+      sort-properties-alphabetically: false
+  output:
+    ansi:
+      enabled: ALWAYS
+
+openapi:
+  servers:
+    - url: http://${DB_HOST:localhost}:${ENV_PORT:8081}
+      description: Develop server
+    - url: http://${DB_SANDBOX_HOST:localhost}:${ENV_PORT:8081}
+      description: UAT server
+    - url: http://${DB_PROD_HOST:localhost}:${ENV_PORT:8081}
+      description: Production server
+  info:
+    title: POKEMON SOAP SERVICE
+    contact:
+      name: Support Team
+      email: leyvajerezgr@gmail.com
+    description: Service for manage pokemon
+  language: ${OPENAPI_LANGUAGE:i18n/swagger_messages.properties} # use to ES: "i18n/swagger_messages_es" and for EN: swagger_messages
+
+spring-doc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+    resolve-schema-properties: true
+  swagger-ui:
+    path: /swagger-ui.html
+    displayRequestDuration: true
+    tagsSorter: alpha
+    resolve-schema-properties: true
+
+logging:
+  level:
+    web: ${DB_PROD_HOST:DEBUG}
+
+apis:
+  pokemon:
+    base-url: https://pokeapi.co/api/v2/pokemon/
+    connect-timeout-ms: 5000
+    read-timeout-ms: 5000
+    write-timeout-ms: 5000
+    maxRetries: 3
+    delayMs: 500
