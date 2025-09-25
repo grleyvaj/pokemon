@@ -2,6 +2,7 @@ package com.pokemon.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication(
   scanBasePackages = {
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 	"com.pokemon.demo.infrastructure.persistence"
   }
 )
+@EnableAsync
 public class PokemonDemoApplication {
 
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.pokemon.demo.application.configuration.documentation;
+package com.pokemon.demo.application.configuration.properties;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;

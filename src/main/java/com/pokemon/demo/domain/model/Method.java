@@ -1,7 +1,8 @@
-package com.pokemon.demo.domain;
+package com.pokemon.demo.domain.model;
 
 public enum Method {
 
+	all,
 	abilities,
 	base_experience,
 	held_items,
