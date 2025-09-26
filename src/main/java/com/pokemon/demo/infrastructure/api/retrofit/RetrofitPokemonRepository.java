@@ -40,7 +40,9 @@ public class RetrofitPokemonRepository implements PokemonRepository {
 
 				throw new PokemonClientApiException("Error calling Pokemon API. Status: " + statusCode);
 			});
-		} catch(Exception e) {
+		} catch (ResourceNotFoundException e) {
+			throw e;
+		} catch (Exception e) {
 			throw new PokemonClientApiException("I/O error calling Pokemon API after retries", e);
 		}
 	}

@@ -1,5 +1,9 @@
 package com.pokemon.demo.domain.exception;
 
+import org.springframework.ws.soap.server.endpoint.annotation.FaultCode;
+import org.springframework.ws.soap.server.endpoint.annotation.SoapFault;
+
+@SoapFault(faultCode = FaultCode.SERVER)
 public class PokemonClientApiException extends Exception {
 
 	public PokemonClientApiException(String message) {

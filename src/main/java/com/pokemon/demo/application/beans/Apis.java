@@ -1,7 +1,7 @@
 package com.pokemon.demo.application.beans;
 
-import com.pokemon.demo.application.configuration.properties.ApiClientProperties;
-import com.pokemon.demo.application.configuration.properties.ApisProperties;
+import com.pokemon.demo.application.configuration.rest.ApiClientProperties;
+import com.pokemon.demo.application.configuration.rest.ApisProperties;
 import com.pokemon.demo.infrastructure.api.retrofit.PokemonApi;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

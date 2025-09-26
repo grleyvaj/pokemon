@@ -1,12 +1,12 @@
 package com.pokemon.demo.application.ports.api;
 
 import com.pokemon.demo.domain.helper.Mapper;
-import com.pokemon.demo.application.ports.api.response.PokemonDetailResponse;
+import com.pokemon.demo.application.ports.api.pokemon_detail.PokemonDetailResponse;
 import com.pokemon.demo.domain.exception.PokemonClientApiException;
 import com.pokemon.demo.domain.exception.ResourceNotFoundException;
 import com.pokemon.demo.domain.model.Pokemon;
 import com.pokemon.demo.domain.repository.RequestLogCreateInput;
-import com.pokemon.demo.domain.use_case.pokemon.PokemonDetailUseCase;
+import com.pokemon.demo.domain.use_case.pokemon.detail.PokemonDetailUseCase;
 import com.pokemon.demo.domain.use_case.request_log.RequestLogCreateUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/pokemons")
+@RequestMapping("/api/pokemons")
 public class PokemonsApiController implements PokemonsApi {
 
 	private final PokemonDetailUseCase pokemonDetailUseCase;

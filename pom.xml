@@ -32,7 +32,11 @@
         <ulid.version>5.2.3</ulid.version>
         <retrofit.version>3.0.0</retrofit.version>
         <retry.version>2.0.12</retry.version>
+        <jaxb.version>4.0.4</jaxb.version>
+        <jakarta-xml.version>4.0.4</jakarta-xml.version>
+        <wsdl4.version>1.6.3</wsdl4.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -68,6 +72,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--	SOAP webservices	-->
+        <dependency>
+            <groupId>wsdl4j</groupId>
+            <artifactId>wsdl4j</artifactId>
+            <version>${wsdl4.version}</version>
+        </dependency>
+
 
         <!--	Migrations	-->
         <dependency>
@@ -117,7 +129,6 @@
             <artifactId>spring-retry</artifactId>
             <version>${retry.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -153,6 +164,38 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <!--	Generate XSD			-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>schemagen</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>schemagen</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/java/com/pokemon/demo/application/ports/webservice/get_id/request
+                                </source>
+                                <source>src/main/java/com/pokemon/demo/application/ports/webservice/get_id/response
+                                </source>
+                                <source>src/main/java/com/pokemon/demo/application/ports/webservice/get_name/request
+                                </source>
+                                <source>src/main/java/com/pokemon/demo/application/ports/webservice/get_name/response
+                                </source>
+                                <source>src/main/java/com/pokemon/demo/application/ports/webservice/get_ability/request
+                                </source>
+                                <source>src/main/java/com/pokemon/demo/application/ports/webservice/get_ability/response
+                                </source>
+                            </sources>
+                            <outputDirectory>${project.build.directory}/generated-resources/xsd</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

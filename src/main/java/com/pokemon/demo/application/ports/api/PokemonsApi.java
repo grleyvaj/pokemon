@@ -1,7 +1,7 @@
 package com.pokemon.demo.application.ports.api;
 
-import com.pokemon.demo.application.handlers.response.ErrorResponse;
-import com.pokemon.demo.application.ports.api.response.PokemonDetailResponse;
+import com.pokemon.demo.application.handlers.api.response.ErrorResponse;
+import com.pokemon.demo.application.ports.api.pokemon_detail.PokemonDetailResponse;
 import com.pokemon.demo.domain.exception.PokemonClientApiException;
 import com.pokemon.demo.domain.exception.ResourceNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
