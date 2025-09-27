@@ -3,7 +3,7 @@ package com.pokemon.demo.application.ports.api.pokemon_detail.resource;
 import com.pokemon.demo.domain.helper.Mapper;
 import com.pokemon.demo.domain.model.Resource;
 
-public class ResourceMapper implements Mapper<Resource, ResourceResponse> {
+public class ResourceResponseMapper implements Mapper<Resource, ResourceResponse> {
 
 	@Override
 	public ResourceResponse map(Resource model) {

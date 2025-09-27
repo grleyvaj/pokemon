@@ -6,8 +6,10 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
+@Accessors(chain = true)
 @XmlRootElement(name = "LocationAreEncountersRequestSoap", namespace = "http://pokemon.demo.mx/")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class LocationAreEncountersRequestSoap {

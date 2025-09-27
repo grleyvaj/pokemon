@@ -8,7 +8,7 @@ import com.pokemon.demo.application.ports.api.pokemon_detail.helds.HeldItemRespo
 import com.pokemon.demo.application.ports.api.pokemon_detail.helds.HeldItemResponseMapper;
 import com.pokemon.demo.application.ports.api.pokemon_detail.helds.HeldItemVersionResponse;
 import com.pokemon.demo.application.ports.api.pokemon_detail.helds.HeldItemVersionResponseMapper;
-import com.pokemon.demo.application.ports.api.pokemon_detail.resource.ResourceMapper;
+import com.pokemon.demo.application.ports.api.pokemon_detail.resource.ResourceResponseMapper;
 import com.pokemon.demo.application.ports.api.pokemon_detail.resource.ResourceResponse;
 import com.pokemon.demo.application.ports.webservice.mappers.AbilityResponseSoapMapper;
 import com.pokemon.demo.application.ports.webservice.mappers.HeldItemResponseSoapMapper;
@@ -51,7 +51,7 @@ public class Mappers {
 
 	@Bean
 	public Mapper<Resource, ResourceResponse> resourceResponseMapper() {
-		return new ResourceMapper();
+		return new ResourceResponseMapper();
 	}
 
 	@Bean

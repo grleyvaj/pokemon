@@ -3,7 +3,7 @@ Expone un **Web Service SOAP** que ofrece métodos relacionados con Pokémon. In
 
 Adicionalmente se expone una **API Rest** que también consume internamente la API de Pokemon y expone el detalle de un Pokémon por su nombre.
 
-Se han configurado dos perfiles uno para trabajar con la BD h2 y otro con mysql.
+Se han configurado dos perfiles uno para trabajar con la BD **h2** y otro con **mysql**.
 
 ### Setup
 - La variable de entorno `ENV_PORT` ha sido configurada para arrancar por el `8081`
@@ -67,5 +67,8 @@ Se han configurado dos perfiles uno para trabajar con la BD h2 y otro con mysql.
       -Dsonar.host.url=http://localhost:9000 \
       -Dsonar.token=<TOKEN>
   ```
-  
+
+  Resultados del análisis:
+    ![sonarqube.png](images/sonarqube.png)
+    ![sonarqube-2.png](images/sonarqube-2.png)
 

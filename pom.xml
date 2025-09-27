@@ -37,7 +37,9 @@
         <jaxb.version>4.0.4</jaxb.version>
         <jaxb2.version>3.3.0</jaxb2.version>
         <jakarta-xml.version>4.0.4</jakarta-xml.version>
-        <sonar.version>5.2.0.4988</sonar.version>
+        <sonar.version>3.10.0.2594</sonar.version>
+        <jacoco.version>0.8.10</jacoco.version>
+        <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
     <dependencies>
@@ -193,7 +195,34 @@
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>${sonar.version}</version>
+                <configuration>
+                    <properties>
+                        <property>
+                            <name>sonar.coverage.jacoco.xmlReportPaths</name>
+                            <value>${sonar.coverage.jacoco.xmlReportPaths}</value>
+                        </property>
+                    </properties>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

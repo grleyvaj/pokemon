@@ -3,8 +3,10 @@ package com.pokemon.demo.application.ports.webservice.resources.get_ability.requ
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.xml.bind.annotation.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
+@Accessors(chain = true)
 @XmlRootElement(name = "AbilityRequestSoap", namespace = "http://pokemon.demo.mx/")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {"name"})
