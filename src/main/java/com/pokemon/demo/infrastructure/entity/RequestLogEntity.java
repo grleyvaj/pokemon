@@ -2,6 +2,7 @@ package com.pokemon.demo.infrastructure.entity;
 
 
 import com.pokemon.demo.domain.helper.Generator;
+import com.pokemon.demo.domain.model.Method;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -27,7 +28,8 @@ public class RequestLogEntity {
 	private LocalDateTime requestDate;
 
 	@Column(name = "method", nullable = false)
-	private String method;
+	@Enumerated(EnumType.STRING)
+	private Method method;
 
 	@Column(name = "duration_ms")
 	private Long durationMs;

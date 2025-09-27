@@ -1,9 +1,9 @@
 package com.pokemon.demo.domain.repository;
 
+import com.pokemon.demo.domain.model.Method;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Data
@@ -11,12 +11,12 @@ import java.util.Optional;
 public class RequestLogCreateInput {
 
 	private final String originIp;
-	private final LocalDateTime requestDate;
-	private final String method;
+	private final Method method;
 	private Long durationMs;
 	private String request;
-	private Object responseObj;
+	private Object requestObj;
 	private String response;
+	private Object responseObj;
 
 	public Optional<Long> getDurationMs() {
 		return Optional.ofNullable(durationMs);
@@ -28,10 +28,6 @@ public class RequestLogCreateInput {
 
 	public Optional<String> getResponse() {
 		return Optional.ofNullable(response);
-	}
-
-	public void addResponse(String response) {
-		this.response = response;
 	}
 
 }

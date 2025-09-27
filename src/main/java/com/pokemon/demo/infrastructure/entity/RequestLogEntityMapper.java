@@ -1,8 +1,12 @@
 package com.pokemon.demo.infrastructure.entity;
 
-import com.pokemon.demo.domain.helper.Mapper;
 import com.pokemon.demo.domain.helper.Generator;
+import com.pokemon.demo.domain.helper.Mapper;
 import com.pokemon.demo.domain.repository.RequestLogCreateInput;
+
+import java.time.LocalDateTime;
+
+import static java.time.ZoneOffset.UTC;
 
 public class RequestLogEntityMapper implements Mapper<RequestLogCreateInput, RequestLogEntity> {
 
@@ -11,7 +15,7 @@ public class RequestLogEntityMapper implements Mapper<RequestLogCreateInput, Req
 		RequestLogEntity entity = new RequestLogEntity()
 		  .setId(Generator.ulid())
 		  .setOriginIp(input.getOriginIp())
-		  .setRequestDate(input.getRequestDate())
+		  .setRequestDate(LocalDateTime.now(UTC))
 		  .setMethod(input.getMethod());
 
 		input.getDurationMs().ifPresent(entity::setDurationMs);
