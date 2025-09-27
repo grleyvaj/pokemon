@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "c5cd03d6-817f-4314-9aec-f79ab192046a",
+		"name": "POKEMON-API-REST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13392925",
+		"_collection_link": "https://gloria-leyva-jerez.postman.co/workspace/POKEMON~7a24c213-8e2e-42bb-ada6-fb7c17bafeec/collection/13392925-c5cd03d6-817f-4314-9aec-f79ab192046a?action=share&source=collection_link&creator=13392925"
+	},
+	"item": [
+		{
+			"name": "Get pokemon detail",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const pokemons = [",
+							"  \"bulbasaur\",\"ivysaur\",\"venusaur\",\"charmander\",\"charmeleon\",\"charizard\",",
+							"  \"squirtle\",\"wartortle\",\"blastoise\",\"caterpie\",\"metapod\",\"butterfree\",",
+							"  \"weedle\",\"kakuna\",\"beedrill\",\"pidgey\",\"pidgeotto\",\"pidgeot\",",
+							"  \"rattata\",\"raticate\",\"pikachu\",\"raichu\",\"sandshrew\",\"sandslash\",",
+							"  \"clefairy\",\"vulpix\",\"jigglypuff\",\"zubat\",\"oddish\",\"gloom\",\"vileplume\"",
+							"];",
+							"",
+							"const choice = pokemons[Math.floor(Math.random() * pokemons.length)];",
+							"pm.variables.set(\"POKEMON_NAME\", choice);",
+							"console.log(\"POKEMON_NAME =\", choice);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{local-pokemon-url}}/api/pokemons/:name",
+					"host": [
+						"{{local-pokemon-url}}"
+					],
+					"path": [
+						"api",
+						"pokemons",
+						":name"
+					],
+					"variable": [
+						{
+							"key": "name",
+							"value": "{{POKEMON_NAME}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

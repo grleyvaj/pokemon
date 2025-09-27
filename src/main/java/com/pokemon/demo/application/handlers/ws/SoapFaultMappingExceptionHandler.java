@@ -12,7 +12,6 @@ import javax.xml.namespace.QName;
 @Configuration
 public class SoapFaultMappingExceptionHandler extends SoapFaultMappingExceptionResolver {
 
-	private static final QName CODE = new QName("code");
 	private static final QName DESCRIPTION = new QName("description");
 
 	@Override

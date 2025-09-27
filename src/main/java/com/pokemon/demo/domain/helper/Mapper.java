@@ -1,6 +1,6 @@
 package com.pokemon.demo.domain.helper;
 
-public interface Mapper<T, F> {
+public interface Mapper<F, T> {
 
-	F map(T input);
+	T map(F input);
 }

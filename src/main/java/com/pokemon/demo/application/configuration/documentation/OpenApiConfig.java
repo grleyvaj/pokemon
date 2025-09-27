@@ -22,9 +22,9 @@ class OpenApiConfig {
 	private final OpenApiProperties props;
 	private final Optional<BuildProperties> buildProperties;
 
-	public static String DEFAULT_INFO_TITLE = "POKEMON";
-	public static String DEFAULT_INFO_DESCRIPTION = "POKEMON SOAP SERVICE";
-	public static String DEFAULT_VERSION = "1.0";
+	public static final String defaultInfoTitle = "POKEMON";
+	public static final String defaultInfoDescription = "POKEMON SOAP SERVICE";
+	public static final String defaultVersion = "1.0";
 
 	public OpenApiConfig(OpenApiProperties props, Optional<BuildProperties> buildProperties) {
 		this.props = props;
@@ -34,9 +34,9 @@ class OpenApiConfig {
 	@Bean
 	public OpenAPI openAPI() {
 		Info info = new Info()
-		  .title(nonNull(this.props.getInfo()) ? this.props.getInfo().getTitle() : DEFAULT_INFO_TITLE)
-		  .description(this.props.getInfo() != null ? props.getInfo().getDescription() : DEFAULT_INFO_DESCRIPTION)
-		  .version(this.buildProperties.map(BuildProperties::getVersion).orElse(DEFAULT_VERSION));
+		  .title(nonNull(this.props.getInfo()) ? this.props.getInfo().getTitle() : defaultInfoTitle)
+		  .description(this.props.getInfo() != null ? props.getInfo().getDescription() : defaultInfoDescription)
+		  .version(this.buildProperties.map(BuildProperties::getVersion).orElse(defaultVersion));
 
 		if(nonNull(this.props.getInfo()) && nonNull(this.props.getInfo().getContact())) {
 			OpenApiProperties.Contact contact = this.props.getInfo().getContact();

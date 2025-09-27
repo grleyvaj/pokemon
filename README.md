@@ -34,4 +34,38 @@ Se han configurado dos perfiles uno para trabajar con la BD h2 y otro con mysql.
 
 
 - Para todo el **CASE** se ha confeccionado una colección de **Postman** que cuenta con una **Suite de pruebas**
-Para los servicios expuestos via **REST** y vía **SOAP**.
+  
+  Para los servicios expuestos via **REST** y vía **SOAP**.
+
+  ![postman-suite.png](images/postman-suite.png)
+
+
+- Se persisten las trazas del log
+
+  ![request-log-h2.png](images/request-log-h2.png)
+
+
+- Ejecución análisis con sonarqube
+
+  Se ha elaborado un archivo **docker-compose** para levantar **SonarQube** con H2:
+    ```bash
+    docker compose up -d 
+    ```
+  URL: http://localhost:9000
+  
+  Estas son las credenciales por defecto, al ingresar por primera vez le pedirá modificar la contraseña
+  
+  - Usuario: admin
+  - Password: admin
+  
+  Deberá acceder a la consola y obtener un TOKEN, para ello dirigirse a `http://localhost:9000/account/security` y crear un TOKEN
+
+  Para realizar el análisis use el TOKEN anterior y ejecute el siguiente comando:
+  ```bash
+    mvn clean verify sonar:sonar \
+      -Dsonar.projectKey=pokemon \
+      -Dsonar.host.url=http://localhost:9000 \
+      -Dsonar.token=<TOKEN>
+  ```
+  
+

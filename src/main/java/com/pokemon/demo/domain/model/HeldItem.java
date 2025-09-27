@@ -10,8 +10,8 @@ import java.util.Optional;
 @Accessors(chain = true)
 public class HeldItem {
 
-	public Resource item;
-	public List<HeldItemVersion> versionDetails;
+	private Resource item;
+	private List<HeldItemVersion> versionDetails;
 
 	public Optional<Resource> getItem() {
 		return Optional.ofNullable(item);

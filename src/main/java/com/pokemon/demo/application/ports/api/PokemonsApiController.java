@@ -42,7 +42,7 @@ public class PokemonsApiController implements PokemonsApi {
 		this.requestLogCreateUseCase.execute(
 		  new RequestLogCreateInput(
 			request.getRemoteAddr(),
-			Method.detail
+			Method.DETAIL
 		  )
 			.setDurationMs(System.currentTimeMillis() - startTime)
 			.setResponseObj(response)

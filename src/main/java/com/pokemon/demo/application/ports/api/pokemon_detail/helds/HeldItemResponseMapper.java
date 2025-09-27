@@ -23,7 +23,7 @@ public class HeldItemResponseMapper implements Mapper<HeldItem, HeldItemResponse
 		model.getItem().ifPresent(item -> heldItem.setItem(this.resourceResponseMapper.map(item)));
 
 		if(nonNull(model.getVersionDetails()) && !model.getVersionDetails().isEmpty()) {
-			heldItem.setVersionDetails(this.heldItemVersionResponseListMapper.map(model.versionDetails));
+			heldItem.setVersionDetails(this.heldItemVersionResponseListMapper.map(model.getVersionDetails()));
 		}
 
 		return heldItem;

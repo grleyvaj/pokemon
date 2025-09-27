@@ -1,0 +1,1063 @@
+{
+	"info": {
+		"_postman_id": "42531e56-0f26-4efd-b45e-66135701fba4",
+		"name": "POKEMON-SOAP-WEBSERVICE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13392925",
+		"_collection_link": "https://gloria-leyva-jerez.postman.co/workspace/POKEMON~7a24c213-8e2e-42bb-ada6-fb7c17bafeec/collection/13392925-42531e56-0f26-4efd-b45e-66135701fba4?action=share&source=collection_link&creator=13392925"
+	},
+	"item": [
+		{
+			"name": "Fetch ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseXml = pm.response.text();",
+							"",
+							"// Validar código HTTP",
+							"pm.test(\"Código de respuesta es 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Extraer el valor de <id> usando regex",
+							"const idMatch = responseXml.match(/<id>(\\d+)<\\/id>/);",
+							"const idValue = idMatch ? idMatch[1] : null;",
+							"",
+							"// Validaciones",
+							"pm.test(\"Campo id existe\", function() {",
+							"    pm.expect(idValue).to.not.be.null;",
+							"});",
+							"",
+							"pm.test(\"Campo id tiene valor numérico\", function() {",
+							"    pm.expect(Number(idValue)).to.be.a(\"number\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const pokemons = [",
+							"  \"bulbasaur\",\"ivysaur\",\"venusaur\",\"charmander\",\"charmeleon\",\"charizard\",",
+							"  \"squirtle\",\"wartortle\",\"blastoise\",\"caterpie\",\"metapod\",\"butterfree\",",
+							"  \"weedle\",\"kakuna\",\"beedrill\",\"pidgey\",\"pidgeotto\",\"pidgeot\",",
+							"  \"rattata\",\"raticate\",\"pikachu\",\"raichu\",\"sandshrew\",\"sandslash\",",
+							"  \"clefairy\",\"vulpix\",\"jigglypuff\",\"zubat\",\"oddish\",\"gloom\",\"vileplume\"",
+							"];",
+							"",
+							"const choice = pokemons[Math.floor(Math.random() * pokemons.length)];",
+							"pm.variables.set(\"POKEMON_NAME\", choice);",
+							"console.log(\"POKEMON_NAME =\", choice);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml;charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "IdRequestSoap",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:pok=\"http://pokemon.demo.mx/\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <pok:IdRequestSoap>\n            <pok:name>{{POKEMON_NAME}}</pok:name>\n        </pok:IdRequestSoap>\n    </soapenv:Body>\n</soapenv:Envelope> \n",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-pokemon-url}}/ws",
+					"host": [
+						"{{local-pokemon-url}}"
+					],
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch ID (Name not found)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseXml = pm.response.text();",
+							"",
+							"pm.test(\"HTTP status es 500\", () => {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Fault code es Client\", () => {",
+							"    pm.expect(responseXml).to.include(\"<faultcode>SOAP-ENV:Client</faultcode>\");",
+							"});",
+							"",
+							"pm.test(\"Fault string contiene mensaje de ResourceNotFoundException\", () => {",
+							"    pm.expect(responseXml).to.include(\"Pokemon with NAME ANY not found\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const pokemons = [",
+							"  \"bulbasaur\",\"ivysaur\",\"venusaur\",\"charmander\",\"charmeleon\",\"charizard\",",
+							"  \"squirtle\",\"wartortle\",\"blastoise\",\"caterpie\",\"metapod\",\"butterfree\",",
+							"  \"weedle\",\"kakuna\",\"beedrill\",\"pidgey\",\"pidgeotto\",\"pidgeot\",",
+							"  \"rattata\",\"raticate\",\"pikachu\",\"raichu\",\"sandshrew\",\"sandslash\",",
+							"  \"clefairy\",\"vulpix\",\"jigglypuff\",\"zubat\",\"oddish\",\"gloom\",\"vileplume\"",
+							"];",
+							"",
+							"const choice = pokemons[Math.floor(Math.random() * pokemons.length)];",
+							"pm.variables.set(\"POKEMON_NAME\", choice);",
+							"console.log(\"POKEMON_NAME =\", choice);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml;charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "IdRequestSoap",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:pok=\"http://pokemon.demo.mx/\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <pok:IdRequestSoap>\n            <pok:name>ANY</pok:name>\n        </pok:IdRequestSoap>\n    </soapenv:Body>\n</soapenv:Envelope> \n",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-pokemon-url}}/ws",
+					"host": [
+						"{{local-pokemon-url}}"
+					],
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseXml = pm.response.text();",
+							"",
+							"// Validar código HTTP",
+							"pm.test(\"Código de respuesta es 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Extraer el valor de <name> usando regex",
+							"const nameMatch = responseXml.match(/<name>(.*?)<\\/name>/);",
+							"const nameValue = nameMatch ? nameMatch[1] : null;",
+							"",
+							"// Validaciones del contenido",
+							"pm.test(\"Campo name existe\", function() {",
+							"    pm.expect(nameValue).to.not.be.null;",
+							"});",
+							"",
+							"pm.test(\"Campo name tiene valor\", function() {",
+							"    pm.expect(nameValue).to.not.be.empty;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const pokemons = [",
+							"  \"bulbasaur\",\"ivysaur\",\"venusaur\",\"charmander\",\"charmeleon\",\"charizard\",",
+							"  \"squirtle\",\"wartortle\",\"blastoise\",\"caterpie\",\"metapod\",\"butterfree\",",
+							"  \"weedle\",\"kakuna\",\"beedrill\",\"pidgey\",\"pidgeotto\",\"pidgeot\",",
+							"  \"rattata\",\"raticate\",\"pikachu\",\"raichu\",\"sandshrew\",\"sandslash\",",
+							"  \"clefairy\",\"vulpix\",\"jigglypuff\",\"zubat\",\"oddish\",\"gloom\",\"vileplume\"",
+							"];",
+							"",
+							"const choice = pokemons[Math.floor(Math.random() * pokemons.length)];",
+							"pm.variables.set(\"POKEMON_NAME\", choice);",
+							"console.log(\"POKEMON_NAME =\", choice);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml;charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "NameRequestSoap",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:pok=\"http://pokemon.demo.mx/\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <pok:NameRequestSoap>\n            <pok:name>{{POKEMON_NAME}}</pok:name>\n        </pok:NameRequestSoap>\n    </soapenv:Body>\n</soapenv:Envelope> \n",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-pokemon-url}}/ws",
+					"host": [
+						"{{local-pokemon-url}}"
+					],
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Name (Name not found)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseXml = pm.response.text();",
+							"",
+							"pm.test(\"HTTP status es 500\", () => {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Fault code es Client\", () => {",
+							"    pm.expect(responseXml).to.include(\"<faultcode>SOAP-ENV:Client</faultcode>\");",
+							"});",
+							"",
+							"pm.test(\"Fault string contiene mensaje de ResourceNotFoundException\", () => {",
+							"    pm.expect(responseXml).to.include(\"Pokemon with NAME ANY not found\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const pokemons = [",
+							"  \"bulbasaur\",\"ivysaur\",\"venusaur\",\"charmander\",\"charmeleon\",\"charizard\",",
+							"  \"squirtle\",\"wartortle\",\"blastoise\",\"caterpie\",\"metapod\",\"butterfree\",",
+							"  \"weedle\",\"kakuna\",\"beedrill\",\"pidgey\",\"pidgeotto\",\"pidgeot\",",
+							"  \"rattata\",\"raticate\",\"pikachu\",\"raichu\",\"sandshrew\",\"sandslash\",",
+							"  \"clefairy\",\"vulpix\",\"jigglypuff\",\"zubat\",\"oddish\",\"gloom\",\"vileplume\"",
+							"];",
+							"",
+							"const choice = pokemons[Math.floor(Math.random() * pokemons.length)];",
+							"pm.variables.set(\"POKEMON_NAME\", choice);",
+							"console.log(\"POKEMON_NAME =\", choice);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml;charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "NameRequestSoap",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:pok=\"http://pokemon.demo.mx/\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <pok:NameRequestSoap>\n            <pok:name>ANY</pok:name>\n        </pok:NameRequestSoap>\n    </soapenv:Body>\n</soapenv:Envelope> \n",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-pokemon-url}}/ws",
+					"host": [
+						"{{local-pokemon-url}}"
+					],
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Abbility",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response contiene listado de abilities con los campos requeridos\", function () {",
+							"    // Convertir XML -> JSON",
+							"    const jsonData = xml2Json(pm.response.text());",
+							"",
+							"    const abilities = jsonData['SOAP-ENV:Envelope']",
+							"        ['SOAP-ENV:Body']",
+							"        ['ns3:AbilityListResponseSoap']",
+							"        ['ability'];",
+							"",
+							"    const list = Array.isArray(abilities) ? abilities : [abilities];",
+							"",
+							"    pm.expect(list.length).to.be.greaterThan(0);",
+							"",
+							"    list.forEach((ability, idx) => {",
+							"        pm.expect(ability).to.have.property(\"hidden\");",
+							"        pm.expect(ability).to.have.property(\"slot\");",
+							"        pm.expect(ability).to.have.property(\"resource\");",
+							"        pm.expect(ability.resource).to.have.property(\"name\");",
+							"        pm.expect(ability.resource).to.have.property(\"url\");",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const pokemons = [",
+							"  \"bulbasaur\",\"ivysaur\",\"venusaur\",\"charmander\",\"charmeleon\",\"charizard\",",
+							"  \"squirtle\",\"wartortle\",\"blastoise\",\"caterpie\",\"metapod\",\"butterfree\",",
+							"  \"weedle\",\"kakuna\",\"beedrill\",\"pidgey\",\"pidgeotto\",\"pidgeot\",",
+							"  \"rattata\",\"raticate\",\"pikachu\",\"raichu\",\"sandshrew\",\"sandslash\",",
+							"  \"clefairy\",\"vulpix\",\"jigglypuff\",\"zubat\",\"oddish\",\"gloom\",\"vileplume\"",
+							"];",
+							"",
+							"const choice = pokemons[Math.floor(Math.random() * pokemons.length)];",
+							"pm.variables.set(\"POKEMON_NAME\", choice);",
+							"console.log(\"POKEMON_NAME =\", choice);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml;charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "AbilityRequestSoap",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:pok=\"http://pokemon.demo.mx/\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <pok:AbilityRequestSoap>\n            <pok:name>{{POKEMON_NAME}}</pok:name>\n        </pok:AbilityRequestSoap>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-pokemon-url}}/ws",
+					"host": [
+						"{{local-pokemon-url}}"
+					],
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Abbility (Name not found)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseXml = pm.response.text();",
+							"",
+							"pm.test(\"HTTP status es 500\", () => {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Fault code es Client\", () => {",
+							"    pm.expect(responseXml).to.include(\"<faultcode>SOAP-ENV:Client</faultcode>\");",
+							"});",
+							"",
+							"pm.test(\"Fault string contiene mensaje de ResourceNotFoundException\", () => {",
+							"    pm.expect(responseXml).to.include(\"Pokemon with NAME ANY not found\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const pokemons = [",
+							"  \"bulbasaur\",\"ivysaur\",\"venusaur\",\"charmander\",\"charmeleon\",\"charizard\",",
+							"  \"squirtle\",\"wartortle\",\"blastoise\",\"caterpie\",\"metapod\",\"butterfree\",",
+							"  \"weedle\",\"kakuna\",\"beedrill\",\"pidgey\",\"pidgeotto\",\"pidgeot\",",
+							"  \"rattata\",\"raticate\",\"pikachu\",\"raichu\",\"sandshrew\",\"sandslash\",",
+							"  \"clefairy\",\"vulpix\",\"jigglypuff\",\"zubat\",\"oddish\",\"gloom\",\"vileplume\"",
+							"];",
+							"",
+							"const choice = pokemons[Math.floor(Math.random() * pokemons.length)];",
+							"pm.variables.set(\"POKEMON_NAME\", choice);",
+							"console.log(\"POKEMON_NAME =\", choice);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml;charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "AbilityRequestSoap",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:pok=\"http://pokemon.demo.mx/\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <pok:AbilityRequestSoap>\n            <pok:name>ANY</pok:name>\n        </pok:AbilityRequestSoap>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-pokemon-url}}/ws",
+					"host": [
+						"{{local-pokemon-url}}"
+					],
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Base Experience",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has base_experience field\", function () {",
+							"    // Parse XML response a JSON",
+							"    var jsonObj = xml2Json(pm.response.text());",
+							"    ",
+							"    // Navega hasta el campo base_experience",
+							"    var baseExperience = jsonObj['SOAP-ENV:Envelope']['SOAP-ENV:Body']['ns3:BaseExperienceResponseSoap']['base_experience'];",
+							"    ",
+							"    // Comprueba que existe y que es un número",
+							"    pm.expect(baseExperience).to.exist;",
+							"    pm.expect(!isNaN(parseInt(baseExperience))).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const pokemons = [",
+							"  \"bulbasaur\",\"ivysaur\",\"venusaur\",\"charmander\",\"charmeleon\",\"charizard\",",
+							"  \"squirtle\",\"wartortle\",\"blastoise\",\"caterpie\",\"metapod\",\"butterfree\",",
+							"  \"weedle\",\"kakuna\",\"beedrill\",\"pidgey\",\"pidgeotto\",\"pidgeot\",",
+							"  \"rattata\",\"raticate\",\"pikachu\",\"raichu\",\"sandshrew\",\"sandslash\",",
+							"  \"clefairy\",\"vulpix\",\"jigglypuff\",\"zubat\",\"oddish\",\"gloom\",\"vileplume\"",
+							"];",
+							"",
+							"const choice = pokemons[Math.floor(Math.random() * pokemons.length)];",
+							"pm.variables.set(\"POKEMON_NAME\", choice);",
+							"console.log(\"POKEMON_NAME =\", choice);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml;charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "BaseExperienceRequestSoap",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:pok=\"http://pokemon.demo.mx/\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <pok:BaseExperienceRequestSoap>\n            <pok:name>{{POKEMON_NAME}}</pok:name>\n        </pok:BaseExperienceRequestSoap>\n    </soapenv:Body>\n</soapenv:Envelope> \n",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-pokemon-url}}/ws",
+					"host": [
+						"{{local-pokemon-url}}"
+					],
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Base Experience (Name not found)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseXml = pm.response.text();",
+							"",
+							"pm.test(\"HTTP status es 500\", () => {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Fault code es Client\", () => {",
+							"    pm.expect(responseXml).to.include(\"<faultcode>SOAP-ENV:Client</faultcode>\");",
+							"});",
+							"",
+							"pm.test(\"Fault string contiene mensaje de ResourceNotFoundException\", () => {",
+							"    pm.expect(responseXml).to.include(\"Pokemon with NAME ANY not found\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const pokemons = [",
+							"  \"bulbasaur\",\"ivysaur\",\"venusaur\",\"charmander\",\"charmeleon\",\"charizard\",",
+							"  \"squirtle\",\"wartortle\",\"blastoise\",\"caterpie\",\"metapod\",\"butterfree\",",
+							"  \"weedle\",\"kakuna\",\"beedrill\",\"pidgey\",\"pidgeotto\",\"pidgeot\",",
+							"  \"rattata\",\"raticate\",\"pikachu\",\"raichu\",\"sandshrew\",\"sandslash\",",
+							"  \"clefairy\",\"vulpix\",\"jigglypuff\",\"zubat\",\"oddish\",\"gloom\",\"vileplume\"",
+							"];",
+							"",
+							"const choice = pokemons[Math.floor(Math.random() * pokemons.length)];",
+							"pm.variables.set(\"POKEMON_NAME\", choice);",
+							"console.log(\"POKEMON_NAME =\", choice);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml;charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "BaseExperienceRequestSoap",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:pok=\"http://pokemon.demo.mx/\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <pok:BaseExperienceRequestSoap>\n            <pok:name>ANY</pok:name>\n        </pok:BaseExperienceRequestSoap>\n    </soapenv:Body>\n</soapenv:Envelope> \n",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-pokemon-url}}/ws",
+					"host": [
+						"{{local-pokemon-url}}"
+					],
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Held Items",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Held items structure is correct if present\", function () {",
+							"    const jsonObj = xml2Json(pm.response.text());",
+							"    ",
+							"    const heldItemsResponse = jsonObj['SOAP-ENV:Envelope']['SOAP-ENV:Body']['ns3:HeldItemListResponseSoap']['held_items'];",
+							"    ",
+							"    // Si no hay elementos, termina el test sin errores",
+							"    if (!heldItemsResponse) {",
+							"        pm.expect(heldItemsResponse).to.be.oneOf([null, undefined]);",
+							"        return;",
+							"    }",
+							"    ",
+							"    // Si hay elementos, fuerza que sea array",
+							"    const heldItemsArray = Array.isArray(heldItemsResponse) ? heldItemsResponse : [heldItemsResponse];",
+							"    ",
+							"    heldItemsArray.forEach(heldItem => {",
+							"        // Debe tener nodo item",
+							"        pm.expect(heldItem['item']).to.exist;",
+							"        pm.expect(heldItem['item']['name']).to.exist;",
+							"        pm.expect(heldItem['item']['url']).to.exist;",
+							"",
+							"        // Debe tener al menos un version_details",
+							"        const versionDetails = heldItem['version_details'];",
+							"        pm.expect(versionDetails).to.exist;",
+							"",
+							"        const versionDetailsArray = Array.isArray(versionDetails) ? versionDetails : [versionDetails];",
+							"",
+							"        versionDetailsArray.forEach(detail => {",
+							"            pm.expect(detail['version']).to.exist;",
+							"            pm.expect(detail['version']['name']).to.exist;",
+							"            pm.expect(detail['version']['url']).to.exist;",
+							"            pm.expect(detail['rarity']).to.exist;",
+							"        });",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const pokemons = [",
+							"  \"bulbasaur\",\"ivysaur\",\"venusaur\",\"charmander\",\"charmeleon\",\"charizard\",",
+							"  \"squirtle\",\"wartortle\",\"blastoise\",\"caterpie\",\"metapod\",\"butterfree\",",
+							"  \"weedle\",\"kakuna\",\"beedrill\",\"pidgey\",\"pidgeotto\",\"pidgeot\",",
+							"  \"rattata\",\"raticate\",\"pikachu\",\"raichu\",\"sandshrew\",\"sandslash\",",
+							"  \"clefairy\",\"vulpix\",\"jigglypuff\",\"zubat\",\"oddish\",\"gloom\",\"vileplume\"",
+							"];",
+							"",
+							"const choice = pokemons[Math.floor(Math.random() * pokemons.length)];",
+							"pm.variables.set(\"POKEMON_NAME\", choice);",
+							"console.log(\"POKEMON_NAME =\", choice);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml;charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "HeldItemsRequestSoap",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:pok=\"http://pokemon.demo.mx/\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <pok:HeldItemsRequestSoap>\n            <pok:name>{{POKEMON_NAME}}</pok:name>\n        </pok:HeldItemsRequestSoap>\n    </soapenv:Body>\n</soapenv:Envelope> \n",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-pokemon-url}}/ws",
+					"host": [
+						"{{local-pokemon-url}}"
+					],
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Held Items (Name Not Found)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseXml = pm.response.text();",
+							"",
+							"pm.test(\"HTTP status es 500\", () => {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Fault code es Client\", () => {",
+							"    pm.expect(responseXml).to.include(\"<faultcode>SOAP-ENV:Client</faultcode>\");",
+							"});",
+							"",
+							"pm.test(\"Fault string contiene mensaje de ResourceNotFoundException\", () => {",
+							"    pm.expect(responseXml).to.include(\"Pokemon with NAME ANY not found\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const pokemons = [",
+							"  \"bulbasaur\",\"ivysaur\",\"venusaur\",\"charmander\",\"charmeleon\",\"charizard\",",
+							"  \"squirtle\",\"wartortle\",\"blastoise\",\"caterpie\",\"metapod\",\"butterfree\",",
+							"  \"weedle\",\"kakuna\",\"beedrill\",\"pidgey\",\"pidgeotto\",\"pidgeot\",",
+							"  \"rattata\",\"raticate\",\"pikachu\",\"raichu\",\"sandshrew\",\"sandslash\",",
+							"  \"clefairy\",\"vulpix\",\"jigglypuff\",\"zubat\",\"oddish\",\"gloom\",\"vileplume\"",
+							"];",
+							"",
+							"const choice = pokemons[Math.floor(Math.random() * pokemons.length)];",
+							"pm.variables.set(\"POKEMON_NAME\", choice);",
+							"console.log(\"POKEMON_NAME =\", choice);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml;charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "HeldItemsRequestSoap",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:pok=\"http://pokemon.demo.mx/\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <pok:HeldItemsRequestSoap>\n            <pok:name>ANY</pok:name>\n        </pok:HeldItemsRequestSoap>\n    </soapenv:Body>\n</soapenv:Envelope> \n",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-pokemon-url}}/ws",
+					"host": [
+						"{{local-pokemon-url}}"
+					],
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Get Location Area Encounters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has location_area_encounters field\", function () {",
+							"    // Convierte el XML a JSON",
+							"    var jsonObj = xml2Json(pm.response.text());",
+							"    ",
+							"    // Navega hasta el campo location_area_encounters",
+							"    var encounters = jsonObj['SOAP-ENV:Envelope']['SOAP-ENV:Body']['ns3:LocalAreaEncountersResponseSoap']['location_area_encounters'];",
+							"    ",
+							"    // Verifica que exista",
+							"    pm.expect(encounters).to.exist;",
+							"    ",
+							"    // Verifica que tenga formato de URL (opcional)",
+							"    var urlPattern = /^https?:\\/\\/[^\\s]+$/;",
+							"    pm.expect(encounters).to.match(urlPattern);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const pokemons = [",
+							"  \"bulbasaur\",\"ivysaur\",\"venusaur\",\"charmander\",\"charmeleon\",\"charizard\",",
+							"  \"squirtle\",\"wartortle\",\"blastoise\",\"caterpie\",\"metapod\",\"butterfree\",",
+							"  \"weedle\",\"kakuna\",\"beedrill\",\"pidgey\",\"pidgeotto\",\"pidgeot\",",
+							"  \"rattata\",\"raticate\",\"pikachu\",\"raichu\",\"sandshrew\",\"sandslash\",",
+							"  \"clefairy\",\"vulpix\",\"jigglypuff\",\"zubat\",\"oddish\",\"gloom\",\"vileplume\"",
+							"];",
+							"",
+							"const choice = pokemons[Math.floor(Math.random() * pokemons.length)];",
+							"pm.variables.set(\"POKEMON_NAME\", choice);",
+							"console.log(\"POKEMON_NAME =\", choice);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml;charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "LocationAreEncountersRequestSoap",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:pok=\"http://pokemon.demo.mx/\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <pok:LocationAreEncountersRequestSoap>\n            <pok:name>{{POKEMON_NAME}}</pok:name>\n        </pok:LocationAreEncountersRequestSoap>\n    </soapenv:Body>\n</soapenv:Envelope> \n",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-pokemon-url}}/ws",
+					"host": [
+						"{{local-pokemon-url}}"
+					],
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Get Location Area Encounters (Name not found)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseXml = pm.response.text();",
+							"",
+							"pm.test(\"HTTP status es 500\", () => {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Fault code es Client\", () => {",
+							"    pm.expect(responseXml).to.include(\"<faultcode>SOAP-ENV:Client</faultcode>\");",
+							"});",
+							"",
+							"pm.test(\"Fault string contiene mensaje de ResourceNotFoundException\", () => {",
+							"    pm.expect(responseXml).to.include(\"Pokemon with NAME ANY not found\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const pokemons = [",
+							"  \"bulbasaur\",\"ivysaur\",\"venusaur\",\"charmander\",\"charmeleon\",\"charizard\",",
+							"  \"squirtle\",\"wartortle\",\"blastoise\",\"caterpie\",\"metapod\",\"butterfree\",",
+							"  \"weedle\",\"kakuna\",\"beedrill\",\"pidgey\",\"pidgeotto\",\"pidgeot\",",
+							"  \"rattata\",\"raticate\",\"pikachu\",\"raichu\",\"sandshrew\",\"sandslash\",",
+							"  \"clefairy\",\"vulpix\",\"jigglypuff\",\"zubat\",\"oddish\",\"gloom\",\"vileplume\"",
+							"];",
+							"",
+							"const choice = pokemons[Math.floor(Math.random() * pokemons.length)];",
+							"pm.variables.set(\"POKEMON_NAME\", choice);",
+							"console.log(\"POKEMON_NAME =\", choice);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml;charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "LocationAreEncountersRequestSoap",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:pok=\"http://pokemon.demo.mx/\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <pok:LocationAreEncountersRequestSoap>\n            <pok:name>ANY</pok:name>\n        </pok:LocationAreEncountersRequestSoap>\n    </soapenv:Body>\n</soapenv:Envelope> \n",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local-pokemon-url}}/ws",
+					"host": [
+						"{{local-pokemon-url}}"
+					],
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

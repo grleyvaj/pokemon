@@ -25,7 +25,7 @@ public class HeldItemResponseSoapMapper implements Mapper<HeldItem, HeldItemResp
 		model.getItem().ifPresent(item -> heldItem.setItem(this.resourceResponseSoapMapper.map(item)));
 
 		if(nonNull(model.getVersionDetails()) && !model.getVersionDetails().isEmpty()) {
-			heldItem.setVersionDetails(this.heldItemVersionResponseSoapListMapper.map(model.versionDetails));
+			heldItem.setVersionDetails(this.heldItemVersionResponseSoapListMapper.map(model.getVersionDetails()));
 		}
 
 		return heldItem;

@@ -11,7 +11,7 @@ public class Ability {
 
 	public final boolean isHidden;
 	public final int slot;
-	public Resource resource;
+	private Resource resource;
 
 	public Optional<Resource> getResource() {
 		return Optional.ofNullable(resource);

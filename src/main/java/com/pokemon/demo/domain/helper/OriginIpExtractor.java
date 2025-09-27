@@ -8,6 +8,10 @@ import java.util.Optional;
 
 public class OriginIpExtractor {
 
+	private OriginIpExtractor() {
+		throw new UnsupportedOperationException("Utility class");
+	}
+
 	public static String ip() {
 		Optional<HttpServletRequest> reqOpt = Optional.empty();
 		var attrs = RequestContextHolder.getRequestAttributes();

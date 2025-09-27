@@ -65,7 +65,7 @@ public class PokemonSoapEndpoint {
 		this.requestLogCreateUseCase.execute(
 		  new RequestLogCreateInput(
 			OriginIpExtractor.ip(),
-			Method.abilities
+			Method.ABILITIES
 		  ).setDurationMs(System.currentTimeMillis() - startTime)
 			.setRequestObj(request)
 			.setResponseObj(response)
@@ -88,7 +88,7 @@ public class PokemonSoapEndpoint {
 		this.requestLogCreateUseCase.execute(
 		  new RequestLogCreateInput(
 			OriginIpExtractor.ip(),
-			Method.base_experience
+			Method.BASE_EXPERIENCE
 		  ).setDurationMs(System.currentTimeMillis() - startTime)
 			.setRequestObj(request)
 			.setResponseObj(response)
@@ -113,7 +113,7 @@ public class PokemonSoapEndpoint {
 		this.requestLogCreateUseCase.execute(
 		  new RequestLogCreateInput(
 			OriginIpExtractor.ip(),
-			Method.held_items
+			Method.HELD_ITEMS
 		  ).setDurationMs(System.currentTimeMillis() - startTime)
 			.setRequestObj(request)
 			.setResponseObj(response)
@@ -136,7 +136,7 @@ public class PokemonSoapEndpoint {
 		this.requestLogCreateUseCase.execute(
 		  new RequestLogCreateInput(
 			OriginIpExtractor.ip(),
-			Method.id
+			Method.ID
 		  ).setDurationMs(System.currentTimeMillis() - startTime)
 			.setRequestObj(request)
 			.setResponseObj(response)
@@ -158,7 +158,7 @@ public class PokemonSoapEndpoint {
 		this.requestLogCreateUseCase.execute(
 		  new RequestLogCreateInput(
 			OriginIpExtractor.ip(),
-			Method.name
+			Method.NAME
 		  ).setDurationMs(System.currentTimeMillis() - startTime)
 			.setRequestObj(request)
 			.setResponseObj(response)
@@ -181,7 +181,7 @@ public class PokemonSoapEndpoint {
 		this.requestLogCreateUseCase.execute(
 		  new RequestLogCreateInput(
 			OriginIpExtractor.ip(),
-			Method.location_area_encounters
+			Method.LOCATION_AREA_ENCOUNTERS
 		  ).setDurationMs(System.currentTimeMillis() - startTime)
 			.setRequestObj(request)
 			.setResponseObj(response)
