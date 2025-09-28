@@ -13,6 +13,7 @@ Se han configurado dos perfiles: uno para trabajar con la BD **H2** y otro con *
 - [SetUp y arranque del sistema](#setup-y-arranque-del-sistema)
 - [Tests y reportes](#tests-y-reportes)
 - [Assets / Imágenes incluidas](#assets--im%C3%A1genes-incluidas)
+- [Arranque con Docker](#run-con-docker)
 
 ---
 
@@ -205,3 +206,15 @@ Las siguientes imágenes están referenciadas por el README (asegúrate de mante
 
 
 ---
+
+# Run con Docker
+Ejecutar el comando
+```bash
+  docker compose up --build
+```
+![docker-deploy.png](images/docker-deploy.png)
+
+En local se configuró por 8081 y para docker el 8080 
+![docker-deploy-wsdl.png](images/docker-deploy-wsdl.png)
+Y se hizo un test con postman
+![docker-deploy-test-postman.png](images/docker-deploy-test-postman.png)
