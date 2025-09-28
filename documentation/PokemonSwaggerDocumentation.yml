@@ -1,0 +1,236 @@
+openapi: 3.0.3
+info:
+  title: Pokemon SOAP API
+  version: 1.0.0
+  description: >
+    API expuesta originalmente como SOAP (`http://pokemon.demo.mx/`).
+    Este es el contrato equivalente en `OpenAPI 3.0` para poder visualizar en Swagger UI/Editor el `WSDL` definido
+servers:
+  - url: http://localhost:8081/ws
+paths:
+  /abilities:
+    post:
+      summary: Get abilities of a Pokémon
+      operationId: getAbilities
+      tags:
+        - Pokemon
+      requestBody:
+        required: true
+        content:
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/AbilityRequestSoap'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/AbilityListResponseSoap'
+  /base-experience:
+    post:
+      summary: Get base experience of a Pokémon
+      operationId: getBaseExperience
+      tags:
+        - Pokemon
+      requestBody:
+        required: true
+        content:
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/BaseExperienceRequestSoap'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BaseExperienceResponseSoap'
+  /held-items:
+    post:
+      summary: Get held items of a Pokémon
+      operationId: getHeldItems
+      tags:
+        - Pokemon
+      requestBody:
+        required: true
+        content:
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/HeldItemsRequestSoap'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/HeldItemListResponseSoap'
+  /id:
+    post:
+      summary: Get ID of a Pokémon
+      operationId: getId
+      tags:
+        - Pokemon
+      requestBody:
+        required: true
+        content:
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/IdRequestSoap'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/IdResponseSoap'
+  /name:
+    post:
+      summary: Get name of a Pokémon by ID
+      operationId: getName
+      tags:
+        - Pokemon
+      requestBody:
+        required: true
+        content:
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/NameRequestSoap'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/NameResponseSoap'
+  /location-area-encounters:
+    post:
+      summary: Get location area encounters of a Pokémon
+      operationId: getLocationAreaEncounters
+      tags:
+        - Pokemon
+      requestBody:
+        required: true
+        content:
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/LocationAreEncountersRequestSoap'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/LocalAreaEncountersResponseSoap'
+
+components:
+  schemas:
+    AbilityRequestSoap:
+      type: object
+      properties:
+        name:
+          type: string
+          example: butterfree
+    AbilityListResponseSoap:
+      type: object
+      properties:
+        abilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/AbilityResponseSoap'
+    AbilityResponseSoap:
+      type: object
+      properties:
+        hidden:
+          type: boolean
+        slot:
+          type: integer
+        resource:
+          $ref: '#/components/schemas/ResourceResponseSoap'
+    ResourceResponseSoap:
+      type: object
+      properties:
+        name:
+          type: string
+          example: overgrow
+        url:
+          type: string
+          example: https://pokeapi.co/api/v2/ability/65/
+    BaseExperienceRequestSoap:
+      type: object
+      properties:
+        name:
+          type: string
+          example: butterfree
+    BaseExperienceResponseSoap:
+      type: object
+      properties:
+        base_experience:
+          type: integer
+          example: 178
+    HeldItemsRequestSoap:
+      type: object
+      properties:
+        name:
+          type: string
+          example: butterfree
+    HeldItemListResponseSoap:
+      type: object
+      properties:
+        held_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/HeldItemResponseSoap'
+    HeldItemResponseSoap:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/ResourceResponseSoap'
+        version_details:
+          type: array
+          items:
+            $ref: '#/components/schemas/HeldItemVersionResponseSoap'
+    HeldItemVersionResponseSoap:
+      type: object
+      properties:
+        version:
+          $ref: '#/components/schemas/ResourceResponseSoap'
+        rarity:
+          type: integer
+          example: 5
+    IdRequestSoap:
+      type: object
+      properties:
+        name:
+          type: string
+          example: butterfree
+    IdResponseSoap:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 12
+    NameRequestSoap:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 12
+    NameResponseSoap:
+      type: object
+      properties:
+        name:
+          type: string
+          example: ivysaur
+    LocationAreEncountersRequestSoap:
+      type: object
+      properties:
+        name:
+          type: string
+          example: butterfree
+    LocalAreaEncountersResponseSoap:
+      type: object
+      properties:
+        location_area_encounters:
+          type: string
+          example: https://pokeapi.co/api/v2/pokemon/12/encounters

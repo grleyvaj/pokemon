@@ -1,18 +1,26 @@
 package com.pokemon.demo.application.beans;
 
+import com.pokemon.demo.application.ports.api.pokemon_detail.PokemonDetailResponse;
+import com.pokemon.demo.application.ports.api.pokemon_detail.PokemonDetailResponseMapper;
+import com.pokemon.demo.application.ports.api.pokemon_detail.ability.AbilityResponse;
+import com.pokemon.demo.application.ports.api.pokemon_detail.ability.AbilityResponseMapper;
+import com.pokemon.demo.application.ports.api.pokemon_detail.helds.HeldItemResponse;
+import com.pokemon.demo.application.ports.api.pokemon_detail.helds.HeldItemResponseMapper;
+import com.pokemon.demo.application.ports.api.pokemon_detail.helds.HeldItemVersionResponse;
+import com.pokemon.demo.application.ports.api.pokemon_detail.helds.HeldItemVersionResponseMapper;
+import com.pokemon.demo.application.ports.api.pokemon_detail.resource.ResourceResponseMapper;
+import com.pokemon.demo.application.ports.api.pokemon_detail.resource.ResourceResponse;
+import com.pokemon.demo.application.ports.webservice.mappers.AbilityResponseSoapMapper;
+import com.pokemon.demo.application.ports.webservice.mappers.HeldItemResponseSoapMapper;
+import com.pokemon.demo.application.ports.webservice.mappers.HeldItemVersionResponseSoapMapper;
+import com.pokemon.demo.application.ports.webservice.mappers.ResourceResponseSoapMapper;
+import com.pokemon.demo.application.ports.webservice.resources.get_ability.response.AbilityResponseSoap;
+import com.pokemon.demo.application.ports.webservice.resources.get_ability.response.ResourceResponseSoap;
+import com.pokemon.demo.application.ports.webservice.resources.get_held_item.response.HeldItemResponseSoap;
+import com.pokemon.demo.application.ports.webservice.resources.get_held_item.response.HeldItemVersionResponseSoap;
 import com.pokemon.demo.domain.helper.ListMapper;
 import com.pokemon.demo.domain.helper.Mapper;
 import com.pokemon.demo.domain.helper.Updater;
-import com.pokemon.demo.application.ports._responses.ability.AbilityResponse;
-import com.pokemon.demo.application.ports._responses.ability.AbilityResponseMapper;
-import com.pokemon.demo.application.ports._responses.helds.HeldItemResponse;
-import com.pokemon.demo.application.ports._responses.helds.HeldItemResponseMapper;
-import com.pokemon.demo.application.ports._responses.helds.HeldItemVersionResponse;
-import com.pokemon.demo.application.ports._responses.helds.HeldItemVersionResponseMapper;
-import com.pokemon.demo.application.ports._responses.resource.ResourceMapper;
-import com.pokemon.demo.application.ports._responses.resource.ResourceResponse;
-import com.pokemon.demo.application.ports.api.response.PokemonDetailResponse;
-import com.pokemon.demo.application.ports.api.response.PokemonDetailResponseMapper;
 import com.pokemon.demo.domain.model.*;
 import com.pokemon.demo.domain.repository.RequestLogCreateInput;
 import com.pokemon.demo.domain.repository.RequestLogUpdateInput;
@@ -43,7 +51,7 @@ public class Mappers {
 
 	@Bean
 	public Mapper<Resource, ResourceResponse> resourceResponseMapper() {
-		return new ResourceMapper();
+		return new ResourceResponseMapper();
 	}
 
 	@Bean
@@ -103,6 +111,43 @@ public class Mappers {
 	@Bean
 	public Mapper<RequestLogEntity, RequestLog> requestLogMapper() {
 		return new RequestLogMapper();
+	}
+
+	@Bean
+	public Mapper<Resource, ResourceResponseSoap> resourceResponseSoapMapper() {
+		return new ResourceResponseSoapMapper();
+	}
+
+	@Bean
+	public Mapper<Ability, AbilityResponseSoap> abilityAbilityResponseSoapMapper(
+	  Mapper<Resource, ResourceResponseSoap> resourceResponseSoapMapper
+	) {
+		return new AbilityResponseSoapMapper(resourceResponseSoapMapper);
+	}
+
+	@Bean
+	public Mapper<HeldItemVersion, HeldItemVersionResponseSoap> heldItemVersionResponseSoapMapper(
+	  Mapper<Resource, ResourceResponseSoap> resourceResponseSoapMapper
+	) {
+		return new HeldItemVersionResponseSoapMapper(resourceResponseSoapMapper);
+	}
+
+	@Bean
+	public ListMapper<HeldItemVersion, HeldItemVersionResponseSoap> heldItemVersionResponseSoapListMapper(
+	  Mapper<HeldItemVersion, HeldItemVersionResponseSoap> heldItemVersionResponseSoapMapper
+	) {
+		return new ListMapper<>(heldItemVersionResponseSoapMapper);
+	}
+
+	@Bean
+	public Mapper<HeldItem, HeldItemResponseSoap> heldItemResponseSoapMapper(
+	  Mapper<Resource, ResourceResponseSoap> resourceResponseSoapMapper,
+	  ListMapper<HeldItemVersion, HeldItemVersionResponseSoap> heldItemVersionResponseSoapListMapper
+	) {
+		return new HeldItemResponseSoapMapper(
+		  resourceResponseSoapMapper,
+		  heldItemVersionResponseSoapListMapper
+		);
 	}
 
 }

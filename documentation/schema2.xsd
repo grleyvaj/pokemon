@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://pokemon.demo.mx/" version="1.0">
+    
+  <xs:import namespace="http://pokemon.demo.mx/" schemaLocation="schema1.xsd"/>
+    
+  <xs:element name="ResourceResponseSoap" type="resourceResponseSoap"/>
+    
+  <xs:complexType name="abilityRequestSoap">
+        
+    <xs:sequence>
+            
+      <xs:element ref="ns1:name"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="abilityListResponseSoap">
+        
+    <xs:sequence>
+            
+      <xs:element maxOccurs="unbounded" name="ability" type="abilityResponseSoap"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="abilityResponseSoap">
+        
+    <xs:sequence>
+            
+      <xs:element name="hidden" type="xs:boolean"/>
+            
+      <xs:element name="slot" type="xs:int"/>
+            
+      <xs:element name="resource" type="resourceResponseSoap"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="resourceResponseSoap">
+        
+    <xs:sequence>
+            
+      <xs:element name="name" type="xs:string"/>
+            
+      <xs:element name="url" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="baseExperienceRequestSoap">
+        
+    <xs:sequence>
+            
+      <xs:element ref="ns1:name"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="baseExperienceResponseSoap">
+        
+    <xs:sequence>
+            
+      <xs:element name="base_experience" type="xs:int"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="heldItemsRequestSoap">
+        
+    <xs:sequence>
+            
+      <xs:element ref="ns1:name"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="heldItemListResponseSoap">
+        
+    <xs:sequence>
+            
+      <xs:element maxOccurs="unbounded" name="held_items" type="heldItemResponseSoap"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="heldItemResponseSoap">
+        
+    <xs:sequence>
+            
+      <xs:element name="item" type="resourceResponseSoap"/>
+            
+      <xs:element maxOccurs="unbounded" name="version_details" type="heldItemVersionResponseSoap"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="heldItemVersionResponseSoap">
+        
+    <xs:sequence>
+            
+      <xs:element name="version" type="resourceResponseSoap"/>
+            
+      <xs:element name="rarity" type="xs:int"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="idRequestSoap">
+        
+    <xs:sequence>
+            
+      <xs:element ref="ns1:name"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="idResponseSoap">
+        
+    <xs:sequence>
+            
+      <xs:element name="id" type="xs:int"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="locationAreEncountersRequestSoap">
+        
+    <xs:sequence>
+            
+      <xs:element ref="ns1:name"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="localAreaEncountersResponseSoap">
+        
+    <xs:sequence>
+            
+      <xs:element name="location_area_encounters" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="nameRequestSoap">
+        
+    <xs:sequence>
+            
+      <xs:element ref="ns1:name"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="nameResponseSoap">
+        
+    <xs:sequence>
+            
+      <xs:element name="name" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+  
+</xs:schema>

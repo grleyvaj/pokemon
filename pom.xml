@@ -30,9 +30,23 @@
         <java.version>21</java.version>
         <spring-doc.version>2.8.13</spring-doc.version>
         <ulid.version>5.2.3</ulid.version>
+        <hibernate.version>6.5.2.Final</hibernate.version>
         <retrofit.version>3.0.0</retrofit.version>
         <retry.version>2.0.12</retry.version>
+        <wsdl4.version>1.6.3</wsdl4.version>
+        <jaxb.version>4.0.4</jaxb.version>
+        <jaxb2.version>3.3.0</jaxb2.version>
+        <jakarta-xml.version>4.0.4</jakarta-xml.version>
+        <sonar.version>3.10.0.2594</sonar.version>
+        <jacoco.version>0.8.10</jacoco.version>
+        <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <cucumber.version>7.11.0</cucumber.version>
+        <junit.jupiter.version>5.12.2</junit.jupiter.version>
+        <junit.platform.version>1.12.2</junit.platform.version>
+        <rest-assured.version>5.5.6</rest-assured.version>
+        <cucumber.publish.enabled>true</cucumber.publish.enabled>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -56,7 +70,7 @@
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-community-dialects</artifactId>
-            <version>6.5.2.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -68,6 +82,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--	SOAP webservices	-->
+        <dependency>
+            <groupId>wsdl4j</groupId>
+            <artifactId>wsdl4j</artifactId>
+            <version>${wsdl4.version}</version>
+        </dependency>
+
 
         <!--	Migrations	-->
         <dependency>
@@ -118,6 +140,46 @@
             <version>${retry.version}</version>
         </dependency>
 
+        <!-- Cucumber Core -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Cucumber Spring Integration -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-spring</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Cucumber JUnit Platform Engine -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-engine</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -152,6 +214,68 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <!--	Generate XSD			-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>${jaxb2.version}</version>
+                <executions>
+                    <execution>
+                        <id>schemagen</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>schemagen</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/java/com/pokemon/demo/application/ports/webservice/resources
+                                </source>
+                            </sources>
+                            <outputDirectory>${project.build.directory}/generated-resources/xsd</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <configuration>
+                    <properties>
+                        <property>
+                            <name>sonar.coverage.jacoco.xmlReportPaths</name>
+                            <value>${sonar.coverage.jacoco.xmlReportPaths}</value>
+                        </property>
+                    </properties>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.4</version>
+                <configuration>
+                    <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://pokemon.demo.mx/" version="1.0">
+    
+  <xs:import schemaLocation="schema2.xsd"/>
+    
+  <xs:element name="AbilityListResponseSoap" type="abilityListResponseSoap"/>
+    
+  <xs:element name="AbilityRequestSoap" type="abilityRequestSoap"/>
+    
+  <xs:element name="AbilityResponseSoap" type="abilityResponseSoap"/>
+    
+  <xs:element name="BaseExperienceRequestSoap" type="baseExperienceRequestSoap"/>
+    
+  <xs:element name="BaseExperienceResponseSoap" type="baseExperienceResponseSoap"/>
+    
+  <xs:element name="HeldItemListResponseSoap" type="heldItemListResponseSoap"/>
+    
+  <xs:element name="HeldItemResponseSoap" type="heldItemResponseSoap"/>
+    
+  <xs:element name="HeldItemVersionResponseSoap" type="heldItemVersionResponseSoap"/>
+    
+  <xs:element name="HeldItemsRequestSoap" type="heldItemsRequestSoap"/>
+    
+  <xs:element name="IdRequestSoap" type="idRequestSoap"/>
+    
+  <xs:element name="IdResponseSoap" type="idResponseSoap"/>
+    
+  <xs:element name="LocalAreaEncountersResponseSoap" type="localAreaEncountersResponseSoap"/>
+    
+  <xs:element name="LocationAreEncountersRequestSoap" type="locationAreEncountersRequestSoap"/>
+    
+  <xs:element name="NameRequestSoap" type="nameRequestSoap"/>
+    
+  <xs:element name="NameResponseSoap" type="nameResponseSoap"/>
+    
+  <xs:element name="name" type="xs:string"/>
+  
+</xs:schema>

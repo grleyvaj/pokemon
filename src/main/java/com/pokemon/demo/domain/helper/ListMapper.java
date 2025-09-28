@@ -3,17 +3,16 @@ package com.pokemon.demo.domain.helper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class ListMapper<From, To> {
+public class ListMapper<F, T> {
 
-	private final Mapper<From, To> mapper;
+	private final Mapper<F, T> mapper;
 
-	public List<To> map(List<From> input) {
+	public List<T> map(List<F> input) {
 		return input.stream()
 		  .map(this.mapper::map)
-		  .collect(Collectors.toList());
+		  .toList();
 	}
 
 }
